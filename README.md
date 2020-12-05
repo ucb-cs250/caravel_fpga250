@@ -1,10 +1,8 @@
 # FPGA250
 
-CS250 VLSI Systems Design
-
-Fall 2020
-
-The University of California, Berkeley
+_CS250 VLSI Systems Design_  
+_Fall 2020_  
+_The University of California, Berkeley_  
 
 ## Authors
 
