@@ -50,6 +50,10 @@ The FPGA comprises three basic tile types:
   - each contain 4x S44 LUTs
 - SRAM, a flexibly-shaped SRAM block
 
+The current FPGA design includes a 4x3 grid of CLBs. Larger fabrics, which
+include the MAC and SRAM tiles, should be possible with tooling help to improve
+layout density.
+
 # CLB
 
 ## SLICEL current design:
