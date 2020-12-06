@@ -376,7 +376,7 @@ The signals starting with "c" represent configuration bits.
  
  ![switch_box_connector v](https://user-images.githubusercontent.com/18373300/96971586-4a1e5180-1550-11eb-927b-afd4af3f2a82.png)
 
-# SRAM Configuration
+# SRAM Architecture
 
 # Configuration Architecture
 
