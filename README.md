@@ -25,7 +25,21 @@ _The University of California, Berkeley_
 
 FPGA250 is an FPGA designed by [UC Berkeley's CS250](https://inst.eecs.berkeley.edu/~cs250/fa20/) class of Fall 2020:
 
-- our names here
+- Adhiraj Datar
+- Aled Cuda
+- Jinyue Zhu
+- Josh Alexander
+- Kareem Ahmad
+- Nate Young
+- Philip Canoza
+- Rohan Lageweg
+- Ryan Lund
+- Ryan Thornton
+- Tan Nguyen
+- Yuan Cheng (Anson) Tsai
+- Yukio Miyasaka
+- Arya Reais-Parsi (TA)
+- John Wawrzynek (Professor)
 
 # Overview
 
