@@ -18,7 +18,8 @@ set ::env(FP_IO_VTHICKNESS_MULT) 4
 set ::env(FP_IO_HTHICKNESS_MULT) 4
 
 
-set ::env(CLOCK_PORT) "user_clock2"
+#set ::env(CLOCK_PORT) "user_clock2"
+set ::env(CLOCK_PORT) "wb_clk_i"
 set ::env(CLOCK_NET) "mprj.clk"
 
 set ::env(CLOCK_PERIOD) "10"
@@ -36,11 +37,12 @@ set ::env(VERILOG_FILES) "\
 	$script_dir/../../verilog/rtl/user_project_wrapper.v"
 
 set ::env(VERILOG_FILES_BLACKBOX) "\
+        $script_dir/../../verilog/rtl/fpga.v \
 	$script_dir/../../verilog/rtl/defines.v \
 	$script_dir/../../verilog/rtl/user_proj_example.v"
 
 set ::env(EXTRA_LEFS) "\
-	$script_dir/../../lef/user_proj_example.lef"
+	$script_dir/../../lef/fpga.lef"
 
 set ::env(EXTRA_GDS_FILES) "\
-	$script_dir/../../gds/user_proj_example.gds"
+	$script_dir/../../gds/fpga.gds"
