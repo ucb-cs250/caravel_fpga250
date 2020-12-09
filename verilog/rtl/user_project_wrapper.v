@@ -75,9 +75,32 @@ module user_project_wrapper #(
     input   user_clock2
 );
 
-// Use default parameters, since these should reflect what the GDS/LEF were
-// produced with.
-fpga fpga250 (
+
+// These should match what we built the FPGA core with.
+localparam IO_NORTH = 10;
+localparam IO_SOUTH = 8;
+localparam IO_EAST = 10;
+localparam IO_WEST = 10;
+
+wire [IO_NORTH-1:0] gpio_north;
+wire [IO_SOUTH-1:0] gpio_south;
+wire [IO_EAST-1:0] gpio_east;
+wire [IO_WEST-1:0] gpio_west;
+
+// This is done by hand :/
+assign gpio_north[8:0] = io_in[23:15];
+assign gpio_east[9:0] = io_in[9:0];
+assign gpio_north[9] = io_in[10];
+assign gpio_south[7:4] = io_in[14:11];
+assign gpio_west[9:0] = io_in[37:28];
+assign gpio_south[3:0] = io_in[27:24];
+
+fpga #(
+  .IO_NORTH(IO_NORTH),
+  .IO_SOUTH(IO_SOUTH),
+  .IO_EAST(IO_EAST),
+  .IO_WEST(IO_WEST),
+) fpga250 (
   // GPIO.
   .gpio_north(gpio_north),
   .gpio_south(gpio_south),
