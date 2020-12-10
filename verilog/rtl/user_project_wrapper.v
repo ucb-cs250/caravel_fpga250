@@ -49,7 +49,7 @@
 
 `else
 
-`include "fpga_bb.v"
+`include "fpga.v"
 
 `endif
 
