@@ -5,7 +5,7 @@
 `include "caravel.v"
 `include "spiflash.v"
 
-module io_ports_tb;
+module basic_config_tb;
 	reg clock;
     	reg RSTB;
 	reg power1, power2;
@@ -28,8 +28,8 @@ module io_ports_tb;
 	end
 
 	initial begin
-		$dumpfile("io_ports.vcd");
-		$dumpvars(0, io_ports_tb);
+		$dumpfile("basic_config.vcd");
+		$dumpvars(0, basic_config_tb);
 
 		// Repeat cycles of 1000 clock edges as needed to complete testbench
 		repeat (25) begin
@@ -123,7 +123,7 @@ module io_ports_tb;
 	);
 
 	spiflash #(
-		.FILENAME("io_ports.hex")
+		.FILENAME("basic_config.hex")
 	) spiflash (
 		.csb(flash_csb),
 		.clk(flash_clk),

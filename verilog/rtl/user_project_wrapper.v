@@ -14,6 +14,45 @@
  *-------------------------------------------------------------
  */
 
+`ifdef SIM
+
+`include "fpga_250/config_team/src/behavioral/wishbone_configuratorinator.v"
+
+`include "fpga_250/src/clb_tile.v"
+
+`include "fpga_250/config_team/src/behavioral/config_tile.v"
+`include "fpga_250/config_team/src/behavioral/shift_chain.v"
+`include "fpga_250/config_team/src/behavioral/config_latch.v"
+
+`include "fpga_250/src/baked/baked_clb_switch_box.v"
+`include "fpga_250/ix_yukio/src/clb_switch_box.v"
+`include "fpga_250/ix_yukio/src/universal_switch_box.v"
+`include "fpga_250/ix_yukio/src/switch_box_element_two.v"
+`include "fpga_250/ix_yukio/src/transmission_gate.v"
+`include "fpga_250/ix_yukio/src/transmission_gate_cell.v"
+
+`include "fpga_250/src/baked/baked_slicel.v"
+`include "fpga_250/clb_team/src/behavioral/slicel.v"
+`include "fpga_250/clb_team/src/behavioral/lut_sXX_softcode.v"
+`include "fpga_250/clb_team/src/behavioral/lut.v"
+`include "fpga_250/clb_team/src/behavioral/block_config_latches.v"
+`include "fpga_250/clb_team/src/behavioral/mux_f_slice.v"
+`include "fpga_250/clb_team/src/behavioral/carry_chain.v"
+
+`include "fpga_250/src/baked/baked_connection_block.v"
+`include "fpga_250/src/baked/baked_connection_block_east.v"
+`include "fpga_250/src/baked/baked_connection_block_north.v"
+`include "fpga_250/ix_yukio/src/connection_block.v"
+`include "fpga_250/ix_yukio/src/transmission_gate_oneway.v"
+
+`include "fpga_250/src/fpga.v"
+
+`else
+
+`include "fpga_bb.v"
+
+`endif
+
 module user_project_wrapper #(
     parameter BITS = 32
 )(
@@ -84,7 +123,7 @@ fpga #(
   .IO_NORTH(IO_NORTH),
   .IO_SOUTH(IO_SOUTH),
   .IO_EAST(IO_EAST),
-  .IO_WEST(IO_WEST),
+  .IO_WEST(IO_WEST)
 ) fpga250 (
   // GPIO.
   .gpio_north(gpio_north),
@@ -98,10 +137,10 @@ fpga #(
   .wbs_cyc_i(wbs_cyc_i),
   .wbs_we_i(wbs_we_i),
   .wbs_sel_i(wbs_sel_i),
-  .wbs_data_i(wbs_data_i),
-  .wbs_addr_i(wbs_addr_i),
+  .wbs_data_i(wbs_dat_i),
+  .wbs_addr_i(wbs_adr_i),
   .wbs_ack_o(wbs_ack_o),
-  .wbs_data_o(wbs_data_o)
+  .wbs_data_o(wbs_dat_o)
 );
 
 endmodule	// user_project_wrapper

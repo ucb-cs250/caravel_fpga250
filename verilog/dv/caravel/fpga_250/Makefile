@@ -1,4 +1,4 @@
-# ---- Test patterns for project striVe ----
+# ---- Test patterns for fpga 250 ----
 
 .SUFFIXES:
 .SILENT: clean all
