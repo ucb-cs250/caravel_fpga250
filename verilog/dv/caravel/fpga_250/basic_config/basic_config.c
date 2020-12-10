@@ -10,8 +10,8 @@
 void main()
 {
 	static volatile uint32_t *	const config_base 	= (void*)(0x30000000);
-	static volatile uint8_t *	const counters		= (void*)(0x30000001);
-	static volatile uint8_t *	const bitstream 	= (void*)(0x30000002);
+	static volatile uint8_t *	const counters		= (void*)(0x30000004);
+	static volatile uint8_t *	const bitstream 	= (void*)(0x30000008);
 
 	// Configure lower 8-IOs as user output
 	// Observe counter value in the testbench
