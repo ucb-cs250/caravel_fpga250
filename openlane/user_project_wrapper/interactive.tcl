@@ -14,7 +14,7 @@ set ::env(FP_DEF_TEMPATE) $script_dir/../../def/user_project_wrapper_empty.def
 
 apply_def_template
 
-add_macro_placement mprj 1150 1700 N
+add_macro_placement fpga250 5 5 N
 
 manual_macro_placement f
 
