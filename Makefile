@@ -102,6 +102,9 @@ $(ARCHIVED): $(ARCHIVES_XZ)
 uncompress: $(ARCHIVED)
 	@echo "All files are concatenated and uncompressed!"
 
+.PHONY: decompress
+decompress: uncompress
+
 
 # LVS
 BLOCKS = $(shell cd openlane && find * -maxdepth 0 -type d)
