@@ -14,7 +14,7 @@ for file_type in lef gds mag; do
   cp -v "${PHY_SOURCE}/fpga.${file_type}" "${CARAVEL_ROOT}/${file_type}";
 done
 
-# Gate-level synthesis.
+# Gate-level synthesised netlists.
 GL_USER_PROJECT_WRAPPER="${CARAVEL_ROOT}/openlane/user_project_wrapper/runs/${USER_PROJECT_WRAPPER_RUN}/results/synthesis/user_project_wrapper.synthesis.v"
 GL_SOURCE="${CLASS_REPO_ROOT}/asic_config/fpga/runs/${FPGA_RUN}/results/synthesis/fpga.synthesis.v"
 GL_DEST="${CARAVEL_ROOT}/verilog/gl/user_project_wrapper.v"
@@ -29,4 +29,7 @@ cat > ${GL_DEST} << EOF
 EOF
 cat ${GL_SOURCE} ${GL_USER_PROJECT_WRAPPER} >> ${GL_DEST}
 
-# Update Verilog source files from team repos.
+# TODO(aryap): final_summary_report.csv
+# Do these still exist?
+
+# TODO(aryap): Update Verilog source files from team repos.
