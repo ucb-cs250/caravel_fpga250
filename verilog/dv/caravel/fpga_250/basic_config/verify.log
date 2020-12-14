@@ -1,0 +1,7 @@
+make[1]: Entering directory '/home/arya/src/openlane_develop/designs/caravel/verilog/dv/caravel/fpga_250/basic_config'
+../../../../../scripts//bitstream2header.py basic_config.bits basic_config.bits.h
+/ef/apps/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -Wl,-Bstatic,-T,../../sections.lds,--strip-debug -ffreestanding -nostdlib -o basic_config.elf ../../start.s basic_config.c
+make[1]: /ef/apps/bin/riscv32-unknown-elf-gcc: Command not found
+make[1]: *** [Makefile:29: basic_config.elf] Error 127
+rm basic_config.bits.h
+make[1]: Leaving directory '/home/arya/src/openlane_develop/designs/caravel/verilog/dv/caravel/fpga_250/basic_config'
