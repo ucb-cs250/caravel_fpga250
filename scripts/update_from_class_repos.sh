@@ -1,4 +1,5 @@
 #!/bin/bash
+# TODO(aryap): Replace this script with just a single submodule (that is rid of unnecessary fluff).
 
 # TODO(aryap): Get source of current script, etc.
 CARAVEL_ROOT=.
@@ -33,4 +34,34 @@ cat ${GL_SOURCE} ${GL_USER_PROJECT_WRAPPER} >> ${GL_DEST}
 # TODO(aryap): final_summary_report.csv
 # Do these still exist?
 
-# TODO(aryap): Update Verilog source files from team repos.
+VERILOG_DEST="${CARAVEL_ROOT}/verilog/rtl/fpga250"
+VERILOG_SOURCES="
+${CLASS_REPO_ROOT}/config_team/src/behavioral/wishbone_configuratorinator.v
+${CLASS_REPO_ROOT}/src/clb_tile.v
+${CLASS_REPO_ROOT}/config_team/src/behavioral/config_tile.v
+${CLASS_REPO_ROOT}/config_team/src/behavioral/shift_chain.v
+${CLASS_REPO_ROOT}/config_team/src/behavioral/config_latch.v
+${CLASS_REPO_ROOT}/src/baked/baked_clb_switch_box.v
+${CLASS_REPO_ROOT}/ix_yukio/src/clb_switch_box.v
+${CLASS_REPO_ROOT}/ix_yukio/src/universal_switch_box.v
+${CLASS_REPO_ROOT}/ix_yukio/src/switch_box_element_two.v
+${CLASS_REPO_ROOT}/ix_yukio/src/transmission_gate.v
+${CLASS_REPO_ROOT}/ix_yukio/src/transmission_gate_cell.v
+${CLASS_REPO_ROOT}/src/baked/baked_slicel.v
+${CLASS_REPO_ROOT}/clb_team/src/behavioral/slicel.v
+${CLASS_REPO_ROOT}/clb_team/src/behavioral/lut_sXX_softcode.v
+${CLASS_REPO_ROOT}/clb_team/src/behavioral/lut.v
+${CLASS_REPO_ROOT}/clb_team/src/behavioral/block_config_latches.v
+${CLASS_REPO_ROOT}/clb_team/src/behavioral/mux_f_slice.v
+${CLASS_REPO_ROOT}/clb_team/src/behavioral/carry_chain.v
+${CLASS_REPO_ROOT}/src/baked/baked_connection_block.v
+${CLASS_REPO_ROOT}/src/baked/baked_connection_block_east.v
+${CLASS_REPO_ROOT}/src/baked/baked_connection_block_north.v
+${CLASS_REPO_ROOT}/ix_yukio/src/connection_block.v
+${CLASS_REPO_ROOT}/ix_yukio/src/transmission_gate_oneway.v
+${CLASS_REPO_ROOT}/src/fpga.v
+"
+
+for file in ${VERILOG_SOURCES}; do
+  cp -v ${file} ${VERILOG_DEST};
+done
