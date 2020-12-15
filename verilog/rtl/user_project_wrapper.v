@@ -31,42 +31,38 @@
 
 `ifdef SIM
 
-`include "fpga_250/config_team/src/behavioral/wishbone_configuratorinator.v"
+`include "fpga250/wishbone_configuratorinator.v"
 
-`include "fpga_250/src/clb_tile.v"
+`include "fpga250/clb_tile.v"
 
-`include "fpga_250/config_team/src/behavioral/config_tile.v"
-`include "fpga_250/config_team/src/behavioral/shift_chain.v"
-`include "fpga_250/config_team/src/behavioral/config_latch.v"
+`include "fpga250/config_tile.v"
+`include "fpga250/shift_chain.v"
+`include "fpga250/config_latch.v"
 
-`include "fpga_250/src/baked/baked_clb_switch_box.v"
-`include "fpga_250/ix_yukio/src/clb_switch_box.v"
-`include "fpga_250/ix_yukio/src/universal_switch_box.v"
-`include "fpga_250/ix_yukio/src/switch_box_element_two.v"
-`include "fpga_250/ix_yukio/src/transmission_gate.v"
-`include "fpga_250/ix_yukio/src/transmission_gate_cell.v"
+`include "fpga250/baked_clb_switch_box.v"
+`include "fpga250/clb_switch_box.v"
+`include "fpga250/universal_switch_box.v"
+`include "fpga250/switch_box_element_two.v"
+`include "fpga250/transmission_gate.v"
+`include "fpga250/transmission_gate_cell.v"
 
-`include "fpga_250/src/baked/baked_slicel.v"
-`include "fpga_250/clb_team/src/behavioral/slicel.v"
-`include "fpga_250/clb_team/src/behavioral/lut_sXX_softcode.v"
-`include "fpga_250/clb_team/src/behavioral/lut.v"
-`include "fpga_250/clb_team/src/behavioral/block_config_latches.v"
-`include "fpga_250/clb_team/src/behavioral/mux_f_slice.v"
-`include "fpga_250/clb_team/src/behavioral/carry_chain.v"
+`include "fpga250/baked_slicel.v"
+`include "fpga250/slicel.v"
+`include "fpga250/lut_sXX_softcode.v"
+`include "fpga250/lut.v"
+`include "fpga250/block_config_latches.v"
+`include "fpga250/mux_f_slice.v"
+`include "fpga250/carry_chain.v"
 
-`include "fpga_250/src/baked/baked_connection_block.v"
-`include "fpga_250/src/baked/baked_connection_block_east.v"
-`include "fpga_250/src/baked/baked_connection_block_north.v"
-`include "fpga_250/ix_yukio/src/connection_block.v"
-`include "fpga_250/ix_yukio/src/transmission_gate_oneway.v"
-
-`include "fpga_250/src/fpga.v"
-
-`else
-
-`include "fpga.v"
+`include "fpga250/baked_connection_block.v"
+`include "fpga250/baked_connection_block_east.v"
+`include "fpga250/baked_connection_block_north.v"
+`include "fpga250/connection_block.v"
+`include "fpga250/transmission_gate_oneway.v"
 
 `endif
+
+`include "fpga250/fpga.v"
 
 module user_project_wrapper #(
     parameter BITS = 32
