@@ -14,7 +14,6 @@ set ::env(FP_DEF_TEMPATE) $script_dir/../../def/user_project_wrapper_empty.def
 
 apply_def_template
 
-# Try 35 35
 add_macro_placement fpga250 35 35 N
 
 manual_macro_placement f
@@ -22,7 +21,8 @@ manual_macro_placement f
 set ::env(_SPACING) 1.6
 set ::env(_WIDTH) 3
 
-set power_domains [list {vccd1 vssd1} {vccd2 vssd2} {vdda1 vssa1} {vdda2 vssa2}]
+# Removed unused power domains: {vdda1 vssa1} {vdda2 vssa2}
+set power_domains [list {vccd1 vssd1} {vccd2 vssd2}]
 
 set ::env(_VDD_NET_NAME) vccd1
 set ::env(_GND_NET_NAME) vssd1

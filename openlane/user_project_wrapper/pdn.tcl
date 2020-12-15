@@ -11,6 +11,7 @@ pdngen::specify_grid stdcell {
 	rails {
 	}
     straps {
+        met4 {width 3 pitch [expr {2*380}] offset 90}
     }
     connect {{met4 met5}}
 }
@@ -29,11 +30,10 @@ pdngen::specify_grid macro {
 
 
 pdngen::specify_grid macro {
-    power_pins $::env(_VDD_NET_NAME)
-    ground_pins $::env(_GND_NET_NAME)
-    blockages "li1 met1 met2 met3 met4 met5"
+    power_pins VPWR
+    ground_pins VGND
+    blockages "li1 met1 met2 met3 met5"
     straps { 
-        met4 {width 3 pitch 380 offset 90}
     } 
     connect {{met4 met5_PIN_hor}}
 }
