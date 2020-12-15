@@ -21,8 +21,7 @@ LARGE_FILES := $(shell find ./gds -type f -name "*.gds")
 LARGE_FILES += $(shell find . -type f -size +$(FILE_SIZE_LIMIT_MB)M \
 	       -not -path "./.git/*" \
 	       -not -path "./gds/*" \
-	       -not -path "./openlane/*" \
-	       -not -path "./verilog/ip/fpga_250/*")
+	       -not -path "./openlane/*")
 
 LARGE_FILES_XZ := $(addsuffix .xz, $(LARGE_FILES))
 LARGE_FILES_XZ_PART := $(addsuffix .part, $(LARGE_FILES_XZ))
