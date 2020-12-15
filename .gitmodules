@@ -1,3 +1,0 @@
-[submodule "verilog/ip/fpga_250"]
-	path = verilog/ip/fpga_250
-	url = https://github.com/ucb-cs250/fabric_team.git
