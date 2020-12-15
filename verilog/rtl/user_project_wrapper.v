@@ -60,9 +60,9 @@
 `include "fpga250/connection_block.v"
 `include "fpga250/transmission_gate_oneway.v"
 
-`endif
-
 `include "fpga250/fpga.v"
+
+`endif
 
 module user_project_wrapper #(
     parameter BITS = 32
