@@ -1,13 +1,13 @@
 --- 
 project: 
-  description: "A template SoC for Google sponsored Open MPW shuttles for SKY130."
+  description: "A simple FPGA aboard the eFabless Caravel, by the Fall 2020 CS250 class at UC Berkeley."
   foundry: "SkyWater"
-  git_url: "https://github.com/efabless/caravel.git"
-  organization: "Efabless"
-  organization_url: "http://efabless.com"
-  owner: "Tim Edwards"
+  git_url: "https://github.com/ucb-cs250/caravel_fpga250.git"
+  organization: "University of California, Berkeley"
+  organization_url: "https://inst.eecs.berkeley.edu/~cs250/fa20/"
+  owner: "Arya Reais-Parsi"
   process: "SKY130"
-  project_name: "Caravel"
+  project_name: "FPGA250"
   tags: 
     - "Open MPW"
     - "Test Harness"
