@@ -26,14 +26,14 @@ endif
 	@sleep 1
 
 	@if [ -f ./$*/interactive.tcl ]; then\
-		docker run -it -v $(OPENLANE_ROOT):/openLANE_flow \
+		sudo docker run -it -v $(OPENLANE_ROOT):/openLANE_flow \
 		-v $(PDK_ROOT):$(PDK_ROOT) \
 		-v $(PWD)/..:/project \
 		-e PDK_ROOT=$(PDK_ROOT) \
 		-u $(shell id -u $(USER)):$(shell id -g $(USER)) \
 		$(OPENLANE_IMAGE_NAME) sh -c $(OPENLANE_INTERACTIVE_COMMAND);\
 	else\
-		docker run -it -v $(OPENLANE_ROOT):/openLANE_flow \
+		sudo docker run -it -v $(OPENLANE_ROOT):/openLANE_flow \
 		-v $(PDK_ROOT):$(PDK_ROOT) \
 		-v $(PWD)/..:/project \
 		-e PDK_ROOT=$(PDK_ROOT) \

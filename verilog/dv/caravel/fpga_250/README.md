@@ -1,6 +1,4 @@
-# Mega-Project Counter Tests
-
-The directory includes three tests for the counter mega-project example: 
+# Smoke tests
 
 1) Basic Configuration test: 
 
