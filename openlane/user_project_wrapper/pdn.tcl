@@ -11,10 +11,11 @@ pdngen::specify_grid stdcell {
 	rails {
 	}
     straps {
-	    met5 {width $::env(_WIDTH) pitch $::env(_H_PITCH) offset $::env(_H_PDN_OFFSET)}
     }
     connect {{met4 met5}}
 }
+	    #met5 {width $::env(_WIDTH) pitch $::env(_H_PITCH) offset $::env(_H_PDN_OFFSET)}
+	    #met4 {width $::env(_WIDTH) pitch $::env(_V_PITCH) offset $::env(_V_PDN_OFFSET)}
 
 pdngen::specify_grid macro {
 	instance "obs_core_obs"
@@ -30,10 +31,11 @@ pdngen::specify_grid macro {
 pdngen::specify_grid macro {
     power_pins $::env(_VDD_NET_NAME)
     ground_pins $::env(_GND_NET_NAME)
-    blockages ""
+    blockages "li1 met1 met2 met3 met4 met5"
     straps { 
+        met4 {width 3 pitch 380 offset 90}
     } 
-    connect {}
+    connect {{met4 met5_PIN_hor}}
 }
 
 set ::halo 0

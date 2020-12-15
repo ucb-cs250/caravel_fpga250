@@ -3,7 +3,7 @@
 # TODO(aryap): Get source of current script, etc.
 CARAVEL_ROOT=.
 CLASS_REPO_ROOT=/home/arya/src/openlane_develop/designs/250
-FPGA_RUN=8x7_2wb_noring_20x20buf_nocts
+FPGA_RUN=360_noscope
 USER_PROJECT_WRAPPER_RUN=user_project_wrapper
 
 PHY_SOURCE="${CLASS_REPO_ROOT}/asic_config/fpga/runs/${FPGA_RUN}/results/magic"
@@ -11,7 +11,8 @@ PHY_SOURCE="${CLASS_REPO_ROOT}/asic_config/fpga/runs/${FPGA_RUN}/results/magic"
 
 # Update final GDS, LEF, MAG, etc.
 for file_type in lef gds mag; do
-  cp -v "${PHY_SOURCE}/fpga.${file_type}" "${CARAVEL_ROOT}/${file_type}";
+  cp -v "${PHY_SOURCE}/fpga.${file_type}" "${CLASS_REPO_ROOT}/gds/fpga/" &
+  cp -v "${PHY_SOURCE}/fpga.${file_type}" "${CARAVEL_ROOT}/${file_type}" &
 done
 
 # Gate-level synthesised netlists.
