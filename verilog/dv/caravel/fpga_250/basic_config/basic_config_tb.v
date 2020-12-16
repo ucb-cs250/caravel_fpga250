@@ -10,12 +10,8 @@ module basic_config_tb;
     	reg RSTB;
 	reg power1, power2;
 	reg power3, power4;
-
-    wire gpio;
-    wire [37:0] mprj_io;
-	wire [7:0] mprj_io_0;
-
-	assign mprj_io_0 = mprj_io[7:0];
+	wire gpio;
+	wire [37:0] mprj_io;
 
 	// External clock is used by default.  Make this artificially fast for the
 	// simulation.  Normally this would be a slow clock and the digital PLL
@@ -36,7 +32,7 @@ module basic_config_tb;
 			repeat (1000) @(posedge clock);
 		end
 		$display("%c[1;31m",27);
-		$display ("Monitor: Timeout, Test Mega-Project IO Ports (RTL) Failed");
+		$display ("Monitor: Timeout, Test basic_config (RTL) Failed");
 		$display("%c[0m",27);
 		$finish;
 	end
@@ -50,9 +46,10 @@ module basic_config_tb;
 	    wait(uut.mprj.fpga250.wishbonatron_00.set_out != 0);
 		wait(uut.mprj.fpga250.wishbonatron_10.set_out != 0);
 
+
 		repeat (1000) @(posedge clock);
 
-	    $display("Monitor: Test 1 Mega-Project IO (RTL) Passed");
+	    $display("Monitor: Test 1 basic_config (RTL) Passed");
 	    $finish;
 	end
 
@@ -77,8 +74,12 @@ module basic_config_tb;
 		power4 <= 1'b1;
 	end
 
-	always @(mprj_io) begin
-		#1 $display("MPRJ-IO state = %b ", mprj_io[7:0]);
+	always @(uut.mprj.fpga250.wishbonatron_00.shift_out) begin
+		#1 $display("Shifter 00 Output state = %b ", uut.mprj.fpga250.wishbonatron_00.shift_out);
+	end
+
+	always @(uut.mprj.fpga250.wishbonatron_10.shift_out) begin
+		#1 $display("Shifter 00 Output state = %b ", uut.mprj.fpga250.wishbonatron_10.shift_out);
 	end
 
 	wire flash_csb;
