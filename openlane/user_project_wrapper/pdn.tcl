@@ -5,18 +5,18 @@ set ::ground_nets $::env(_GND_NET_NAME)
 pdngen::specify_grid stdcell {
     name grid
 	core_ring {
-		met5 {width $::env(_WIDTH) spacing $::env(_SPACING) core_offset $::env(_H_OFFSET)}
-		met4 {width $::env(_WIDTH) spacing $::env(_SPACING) core_offset $::env(_V_OFFSET)}
+            met5 {width $::env(_WIDTH) spacing $::env(_SPACING) core_offset $::env(_H_OFFSET)}
+            met4 {width $::env(_WIDTH) spacing $::env(_SPACING) core_offset $::env(_V_OFFSET)}
 	}
 	rails {
 	}
     straps {
-        met4 {width 3 pitch [expr {2*380}] offset 90}
+        met4 {width 3 pitch 760 offset 113.1}
     }
     connect {{met4 met5}}
 }
-	    #met5 {width $::env(_WIDTH) pitch $::env(_H_PITCH) offset $::env(_H_PDN_OFFSET)}
-	    #met4 {width $::env(_WIDTH) pitch $::env(_V_PITCH) offset $::env(_V_PDN_OFFSET)}
+        #met4 {width $::env(_WIDTH) pitch $::env(_V_PITCH) offset $::env(_V_PDN_OFFSET)}
+	#met5 {width $::env(_WIDTH) pitch $::env(_H_PITCH) offset $::env(_H_PDN_OFFSET)}
 
 pdngen::specify_grid macro {
 	instance "obs_core_obs"
@@ -30,12 +30,13 @@ pdngen::specify_grid macro {
 
 
 pdngen::specify_grid macro {
+    instance "fpga250"
     power_pins VPWR
     ground_pins VGND
-    blockages "li1 met1 met2 met3 met5"
+    blockages "li1 met1 met2 met3"
     straps { 
     } 
-    connect {{met4 met5_PIN_hor}}
+    connect {{met5_PIN_hor met4}}
 }
 
 set ::halo 0
@@ -44,5 +45,6 @@ set ::halo 0
 set ::rails_start_with "POWER" ;
 
 # POWER or GROUND #Upper metal stripes starting with power or ground rails at the left/bottom of the core area
-set ::stripes_start_with "POWER" ;
+#
+set ::stripes_start_with "GROUND" ;
 
