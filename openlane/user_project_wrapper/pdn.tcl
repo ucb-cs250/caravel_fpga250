@@ -46,5 +46,5 @@ set ::rails_start_with "POWER" ;
 
 # POWER or GROUND #Upper metal stripes starting with power or ground rails at the left/bottom of the core area
 #
-set ::stripes_start_with "GROUND" ;
+set ::stripes_start_with "POWER" ;
 
