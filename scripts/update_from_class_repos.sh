@@ -4,21 +4,39 @@
 # TODO(aryap): Get source of current script, etc.
 CARAVEL_ROOT=.
 CLASS_REPO_ROOT=/home/arya/src/openlane_develop/designs/250
-FPGA_RUN=360_noscope
 USER_PROJECT_WRAPPER_RUN=user_project_wrapper
 
-PHY_SOURCE="${CLASS_REPO_ROOT}/asic_config/fpga/runs/${FPGA_RUN}/results/magic"
-#PHY_SOURCE="${CLASS_REPO_ROOT}/gds/fpga"
-
 # Update final GDS, LEF, MAG, etc.
+FPGA_RUN="360_noscope_noring"
+PHY_SOURCE="${CLASS_REPO_ROOT}/asic_config/fpga/runs/${FPGA_RUN}/results/magic"
+#PHY_SOURCE="${CLASS_REPO_ROOT}/gds/${PHY_SOURCE}"
 for file_type in lef gds mag; do
   cp -v "${PHY_SOURCE}/fpga.${file_type}" "${CLASS_REPO_ROOT}/gds/fpga/" &
   cp -v "${PHY_SOURCE}/fpga.${file_type}" "${CARAVEL_ROOT}/${file_type}" &
 done
 
+CLB_RUN="360_noscope"
+PHY_SOURCE="${CLASS_REPO_ROOT}/asic_config/clb_tile/runs/${CLB_RUN}/results/magic"
+for file_type in lef gds mag; do
+  cp -v "${PHY_SOURCE}/clb_tile.${file_type}" "${CLASS_REPO_ROOT}/gds/clb_tile/" &
+  cp -v "${PHY_SOURCE}/clb_tile.${file_type}" "${CARAVEL_ROOT}/${file_type}" &
+done
+
+#WB_RUN="360_noscope"
+#PHY_SOURCE="${CLASS_REPO_ROOT}/config_team/asic_config/wishbone_configuratorinator/runs/${WB_RUN}/results/magic"
+#for file_type in lef gds mag; do
+#  cp -v "${PHY_SOURCE}/wishbone_configuratorinator.${file_type}" "${CLASS_REPO_ROOT}/gds/wishbone_configuratorinator/" &
+#  cp -v "${PHY_SOURCE}/wishbone_configuratorinator.${file_type}" "${CARAVEL_ROOT}/${file_type}" &
+#done
+
+
 # Gate-level synthesised netlists.
 GL_USER_PROJECT_WRAPPER="${CARAVEL_ROOT}/openlane/user_project_wrapper/runs/${USER_PROJECT_WRAPPER_RUN}/results/synthesis/user_project_wrapper.synthesis.v"
-GL_SOURCE="${CLASS_REPO_ROOT}/asic_config/fpga/runs/${FPGA_RUN}/results/synthesis/fpga.synthesis.v"
+GL_SOURCE="
+${CLASS_REPO_ROOT}/asic_config/fpga/runs/${FPGA_RUN}/results/synthesis/fpga.synthesis.v
+${CLASS_REPO_ROOT}/asic_config/clb_tile/runs/${CLB_RUN}/results/synthesis/clb_tile.synthesis.v
+"
+
 GL_DEST="${CARAVEL_ROOT}/verilog/gl/user_project_wrapper.v"
 cat > ${GL_DEST} << EOF
 /** $(date)
@@ -29,7 +47,10 @@ cat > ${GL_DEST} << EOF
  *   ${GL_USER_PROJECT_WRAPPER}
  */
 EOF
-cat ${GL_SOURCE} ${GL_USER_PROJECT_WRAPPER} >> ${GL_DEST}
+for source in ${GL_SOURCE}; do
+  cat ${source} >> ${GL_DEST}
+done
+cat ${GL_USER_PROJECT_WRAPPER} >> ${GL_DEST}
 
 # TODO(aryap): final_summary_report.csv
 # Do these still exist?

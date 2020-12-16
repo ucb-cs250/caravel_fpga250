@@ -30,7 +30,7 @@ wire [SWITCHBOX_CONF_WIDTH-1:0] switch_conf_bus;
 
 reg [SWITCHBOX_CONF_WIDTH-1:0] switch_conf_regs;
 
-always @(posedge clk) begin
+always @(clk) begin
   if (set_in) begin
     switch_conf_regs <= switch_conf_bus;
   end
