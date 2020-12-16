@@ -79,7 +79,7 @@ module basic_config_tb;
 	end
 
 	always @(uut.mprj.fpga250.wishbonatron_10.shift_out) begin
-		#1 $display("Shifter 00 Output state = %b ", uut.mprj.fpga250.wishbonatron_10.shift_out);
+		#1 $display("Shifter 10 Output state = %b ", uut.mprj.fpga250.wishbonatron_10.shift_out);
 	end
 
 	wire flash_csb;
