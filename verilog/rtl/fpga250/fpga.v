@@ -34,7 +34,7 @@ module fpga #(
   parameter CLBOUT_EACH_SIDE = 5,
   parameter CLBOS = 4,
   parameter CLBOD = 4,
-  parameter CLBX = 1,
+  parameter CLBX = 1
 )(
   inout [IO_NORTH-1:0] gpio_north,
   inout [IO_SOUTH-1:0] gpio_south,
@@ -204,7 +204,7 @@ assign wbs_ack_o = wbs_ack_o_internal[0] | wbs_ack_o_internal[1];
 wishbone_configuratorinator_00 wishbonatron_00 (
   .wb_clk_i(wb_clk_i),
   .wb_rst_i(wb_rst_i),
-
+  .wbs_cyc_i(wbs_cyc_i),
   .wbs_stb_i(wbs_stb_i),
   .wbs_we_i(wbs_we_i),
   .wbs_sel_i(wbs_sel_i),
@@ -221,7 +221,7 @@ wishbone_configuratorinator_00 wishbonatron_00 (
 wishbone_configuratorinator_10 wishbonatron_10 (
   .wb_clk_i(wb_clk_i),
   .wb_rst_i(wb_rst_i),
-
+  .wbs_cyc_i(wbs_cyc_i),
   .wbs_stb_i(wbs_stb_i),
   .wbs_we_i(wbs_we_i),
   .wbs_sel_i(wbs_sel_i),
