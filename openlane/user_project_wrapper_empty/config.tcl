@@ -53,9 +53,8 @@ set ::env(VERILOG_FILES) "\
 	$script_dir/../../verilog/rtl/user_project_wrapper.v"
 
 set ::env(VERILOG_FILES_BLACKBOX) "\
-        $script_dir/../../verilog/rtl/fpga.v \
-	$script_dir/../../verilog/rtl/defines.v \
-	$script_dir/../../verilog/rtl/user_proj_example.v"
+        $script_dir/../../verilog/rtl/blackbox/fpga.v \
+	$script_dir/../../verilog/rtl/defines.v"
 
 set ::env(EXTRA_LEFS) "\
 	$script_dir/../../lef/fpga.lef"
