@@ -63,9 +63,8 @@ verify:
 	echo "verify"
 
 $(LARGE_FILES_XZ_PART): %.xz.part: %
-	@lzma --compress --extreme --force --threads=$(THREADS) --stdout $< > $(addsuffix .xz, $<) && \
+	@xz --compress --extreme --force --threads=$(THREADS) $< && \
 	split -b $(FILE_SIZE_SPLIT_MB)M $(addsuffix .xz, $<) $@ && \
-	rm $< $<.xz && \
 	echo "$< -> $$(find . -wholename *$<*)"
 
 # This target compresses all files larger than $(FILE_SIZE_LIMIT_MB) MB
@@ -78,7 +77,7 @@ $(ARCHIVES_XZ):
 $(ARCHIVED): $(ARCHIVES_XZ)
 	@export PARTS="$(sort $(wildcard $@.xz.par*))" && \
 	cat $${PARTS} > $@.xz && \
-	lzma --decompress --force --threads=$(THREADS) $@.xz && \
+	unxz --force --threads=$(THREADS) $@.xz && \
 	rm $${PARTS} && \
 	echo "$${PARTS} -> $@"
 
