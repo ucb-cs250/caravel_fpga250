@@ -31,6 +31,8 @@
 
 `ifdef SIM
 
+`include "fpga250/wishbone_configuratorinator_00.v"
+`include "fpga250/wishbone_configuratorinator_10.v"
 `include "fpga250/wishbone_configuratorinator.v"
 
 `include "fpga250/clb_tile.v"

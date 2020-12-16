@@ -43,11 +43,12 @@ module basic_config_tb;
 
 	initial begin
 	    // Observe Output pins [7:0]
-		repeat (10) begin
+		repeat (2) begin
 			repeat (1000) @(posedge clock);
 		end
 
-	    wait(uut.mprj.fpga250.wishbonatron.set_out != 0);
+	    wait(uut.mprj.fpga250.wishbonatron_00.set_out != 0);
+		wait(uut.mprj.fpga250.wishbonatron_10.set_out != 0);
 
 		repeat (1000) @(posedge clock);
 

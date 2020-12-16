@@ -95,12 +95,17 @@ module wishbone_configuratorinator #(
                 if (wbs_sel_i[2] == 1) bits_c <= wbs_data_i[23:16];
                 if (wbs_sel_i[3] == 1) bits_d <= wbs_data_i[31:24];
                 bits_index <= 0;
-                charged <= charged | wbs_sel_i;
+                if (output_initiated == 0) begin
+                    charged <= charged | wbs_sel_i;
+	        end else begin
+		    charged <= 0;
+		end
                 if ((charged | wbs_sel_i) != 4'b1111) write_transaction_in_progress <= 0;
             end else begin
                 write_transaction_in_progress <= 0;
             end
         end
+
         if (charged == 4'b1111) begin
             charged <= 0;
             output_initiated <= 1;
