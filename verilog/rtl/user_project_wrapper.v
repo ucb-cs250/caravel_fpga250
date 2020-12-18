@@ -1,18 +1,3 @@
-// SPDX-FileCopyrightText: 2020 Efabless Corporation
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-// SPDX-License-Identifier: Apache-2.0
-
 `default_nettype none
 /*
  *-------------------------------------------------------------
@@ -28,6 +13,43 @@
  *
  *-------------------------------------------------------------
  */
+
+`ifdef SIM
+
+`include "fpga250/wishbone_configuratorinator_00.v"
+`include "fpga250/wishbone_configuratorinator_10.v"
+`include "fpga250/wishbone_configuratorinator.v"
+
+`include "fpga250/clb_tile.v"
+
+`include "fpga250/config_tile.v"
+`include "fpga250/shift_chain.v"
+`include "fpga250/config_latch.v"
+
+`include "fpga250/baked_clb_switch_box.v"
+`include "fpga250/clb_switch_box.v"
+`include "fpga250/universal_switch_box.v"
+`include "fpga250/switch_box_element_two.v"
+`include "fpga250/transmission_gate.v"
+`include "fpga250/transmission_gate_cell.v"
+
+`include "fpga250/baked_slicel.v"
+`include "fpga250/slicel.v"
+`include "fpga250/lut_sXX_softcode.v"
+`include "fpga250/lut.v"
+`include "fpga250/block_config_latches.v"
+`include "fpga250/mux_f_slice.v"
+`include "fpga250/carry_chain.v"
+
+`include "fpga250/baked_connection_block.v"
+`include "fpga250/baked_connection_block_east.v"
+`include "fpga250/baked_connection_block_north.v"
+`include "fpga250/connection_block.v"
+`include "fpga250/transmission_gate_oneway.v"
+
+`include "fpga250/fpga.v"
+
+`endif
 
 module user_project_wrapper #(
     parameter BITS = 32
@@ -75,50 +97,49 @@ module user_project_wrapper #(
     input   user_clock2
 );
 
-    /*--------------------------------------*/
-    /* User project is instantiated  here   */
-    /*--------------------------------------*/
 
-    user_proj_example mprj (
-    `ifdef USE_POWER_PINS
-	.vdda1(vdda1),	// User area 1 3.3V power
-	.vdda2(vdda2),	// User area 2 3.3V power
-	.vssa1(vssa1),	// User area 1 analog ground
-	.vssa2(vssa2),	// User area 2 analog ground
-	.vccd1(vccd1),	// User area 1 1.8V power
-	.vccd2(vccd2),	// User area 2 1.8V power
-	.vssd1(vssd1),	// User area 1 digital ground
-	.vssd2(vssd2),	// User area 2 digital ground
-    `endif
+// These should match what we built the FPGA core with.
+localparam IO_NORTH = 10;
+localparam IO_SOUTH = 8;
+localparam IO_EAST = 10;
+localparam IO_WEST = 10;
 
-	// MGMT core clock and reset
+wire [IO_NORTH-1:0] gpio_north;
+wire [IO_SOUTH-1:0] gpio_south;
+wire [IO_EAST-1:0] gpio_east;
+wire [IO_WEST-1:0] gpio_west;
 
-    	.wb_clk_i(wb_clk_i),
-    	.wb_rst_i(wb_rst_i),
+// This is done by hand :/
+assign gpio_north[8:0] = io_in[23:15];
+assign gpio_east[9:0] = io_in[9:0];
+assign gpio_north[9] = io_in[10];
+assign io_out[14:11] = gpio_south[7:4];
+assign io_out[37:28] = gpio_west[9:0];
+assign io_out[27:24] = gpio_south[3:0];
 
-	// MGMT SoC Wishbone Slave
-
-	.wbs_cyc_i(wbs_cyc_i),
-	.wbs_stb_i(wbs_stb_i),
-	.wbs_we_i(wbs_we_i),
-	.wbs_sel_i(wbs_sel_i),
-	.wbs_adr_i(wbs_adr_i),
-	.wbs_dat_i(wbs_dat_i),
-	.wbs_ack_o(wbs_ack_o),
-	.wbs_dat_o(wbs_dat_o),
-
-	// Logic Analyzer
-
-	.la_data_in(la_data_in),
-	.la_data_out(la_data_out),
-	.la_oen (la_oen),
-
-	// IO Pads
-
-	.io_in (io_in),
-    	.io_out(io_out),
-    	.io_oeb(io_oeb)
-    );
+fpga #(
+  .IO_NORTH(IO_NORTH),
+  .IO_SOUTH(IO_SOUTH),
+  .IO_EAST(IO_EAST),
+  .IO_WEST(IO_WEST)
+) fpga250 (
+  // GPIO.
+  .gpio_north(gpio_north),
+  .gpio_south(gpio_south),
+  .gpio_west(gpio_west),
+  .gpio_east(gpio_east),
+  // Wishbone.
+  .wb_clk_i(wb_clk_i),
+  .wb_rst_i(wb_rst_i),
+  .wbs_stb_i(wbs_stb_i),
+  .wbs_cyc_i(wbs_cyc_i),
+  .wbs_we_i(wbs_we_i),
+  .wbs_sel_i(wbs_sel_i),
+  .wbs_data_i(wbs_dat_i),
+  .wbs_addr_i(wbs_adr_i),
+  .wbs_ack_o(wbs_ack_o),
+  .wbs_data_o(wbs_dat_o)
+);
 
 endmodule	// user_project_wrapper
 `default_nettype wire
