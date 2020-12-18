@@ -4,6 +4,10 @@ _CS250 VLSI Systems Design_
 _Fall 2020_  
 _The University of California, Berkeley_  
 
+## Danger
+
+This design was built with Openlane tag `mpw-one-a`, a.k.a. `rc5`, and likewise the `user_project_wrapper` was hardened with Caravel tag `mpw-one-a` (the `one-a` branch of this repo). However, the `master` branch of this repo is rebased on `mpw-one-b` of the Caravel repo for submission to the first shuttle run. If you're going to re-harden the blocks, please do so in the `one-a` branch.
+
 ## Authors
 
 FPGA250 is an FPGA designed by [UC Berkeley's CS250](https://inst.eecs.berkeley.edu/~cs250/fa20/) class of Fall 2020:
