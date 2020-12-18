@@ -110,12 +110,12 @@ wire [IO_EAST-1:0] gpio_east;
 wire [IO_WEST-1:0] gpio_west;
 
 // This is done by hand :/
-assign io_out[23:15] = gpio_north[8:0];
-assign io_out[9:0] = gpio_east[9:0];
-assign io_out[10] = gpio_north[9];
-assign gpio_south[7:4] = io_in[14:11];
-assign gpio_west[9:0] = io_in[37:28];
-assign gpio_south[3:0] = io_in[27:24];
+assign gpio_north[8:0] = io_in[23:15];
+assign gpio_east[9:0] = io_in[9:0];
+assign gpio_north[9] = io_in[10];
+assign io_out[14:11] = gpio_south[7:4];
+assign io_out[37:28] = gpio_west[9:0];
+assign io_out[27:24] = gpio_south[3:0];
 
 fpga #(
   .IO_NORTH(IO_NORTH),
