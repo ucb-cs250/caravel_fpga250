@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # SPDX-FileCopyrightText: 2020 Efabless Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,9 +15,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
 # cannot commit files larger than 100 MB to GitHub
-=======
-# cannot commit files larger than 100 MB to GitHub 
->>>>>>> 6eece28af4acc894889eabe210fe5ae497777bee
 FILE_SIZE_LIMIT_MB = 80
 FILE_SIZE_SPLIT_MB = 80
 LARGE_FILES := $(shell find ./gds -type f -name "*.gds")
@@ -32,16 +28,6 @@ LARGE_FILES_XZ_PART := $(addsuffix .part, $(LARGE_FILES_XZ))
 
 # These are compressed (.xz) and split (.part*) archives.
 ARCHIVES_XZ_PART := $(shell find . -type f -name "*.xz.part*")
-<<<<<<< HEAD
-=======
-
-# These are the name of the .xz archives to restore by joining split parts.
-ARCHIVES_XZ := $(sort $(basename $(ARCHIVES_XZ_PART)))
-
-# These are names of the .gds files to restores from the compressed and split
-# archives.
-ARCHIVED := $(sort $(basename $(ARCHIVES_XZ)) $(basename $(shell find . -type f -name "*.xz")))
->>>>>>> 6eece28af4acc894889eabe210fe5ae497777bee
 
 # These are the name of the .xz archives to restore by joining split parts.
 ARCHIVES_XZ := $(sort $(basename $(ARCHIVES_XZ_PART)))
@@ -101,15 +87,9 @@ $(LARGE_FILES_XZ_PART): %.xz.part: %
 .PHONY: compress
 compress: $(LARGE_FILES_XZ_PART)
 	@echo "Files larger than $(FILE_SIZE_LIMIT_MB) MBytes are compressed and split!"
-<<<<<<< HEAD
 
 $(ARCHIVES_XZ):
 
-=======
-
-$(ARCHIVES_XZ):
-
->>>>>>> 6eece28af4acc894889eabe210fe5ae497777bee
 $(ARCHIVED): $(ARCHIVES_XZ)
 	@export PARTS="$(sort $(wildcard $@.xz.par*))" && \
 	cat $${PARTS} > $@.xz && \
