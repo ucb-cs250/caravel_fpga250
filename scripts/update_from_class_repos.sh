@@ -11,14 +11,12 @@ FPGA_RUN="final5b_wrongclb"
 PHY_SOURCE="${CLASS_REPO_ROOT}/asic_config/fpga/runs/${FPGA_RUN}/results/magic"
 #PHY_SOURCE="${CLASS_REPO_ROOT}/gds/${PHY_SOURCE}"
 for file_type in lef gds mag; do
-  cp -v "${PHY_SOURCE}/fpga.${file_type}" "${CLASS_REPO_ROOT}/gds/fpga/" &
   cp -v "${PHY_SOURCE}/fpga.${file_type}" "${CARAVEL_ROOT}/${file_type}" &
 done
 
 CLB_RUN="predecode_a_2"
 PHY_SOURCE="${CLASS_REPO_ROOT}/asic_config/clb_tile/runs/${CLB_RUN}/results/magic"
 for file_type in lef gds mag; do
-  cp -v "${PHY_SOURCE}/clb_tile.${file_type}" "${CLASS_REPO_ROOT}/gds/clb_tile/" &
   cp -v "${PHY_SOURCE}/clb_tile.${file_type}" "${CARAVEL_ROOT}/${file_type}" &
 done
 
@@ -26,7 +24,6 @@ WB_RUN_00="360_noscope_a"
 WB_RUN_10="360_noscope_a"
 #PHY_SOURCE="${CLASS_REPO_ROOT}/config_team/asic_config/wishbone_configuratorinator/runs/${WB_RUN}/results/magic"
 #for file_type in lef gds mag; do
-#  cp -v "${PHY_SOURCE}/wishbone_configuratorinator.${file_type}" "${CLASS_REPO_ROOT}/gds/wishbone_configuratorinator/" &
 #  cp -v "${PHY_SOURCE}/wishbone_configuratorinator.${file_type}" "${CARAVEL_ROOT}/${file_type}" &
 #done
 

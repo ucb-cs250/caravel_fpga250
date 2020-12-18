@@ -11,7 +11,7 @@ pdngen::specify_grid stdcell {
 	rails {
 	}
     straps {
-        met4 {width 3 pitch 740 offset 116.53}
+        met4 {width 3 pitch 738.710 offset 181.34}
 	met5 {width $::env(_WIDTH) pitch $::env(_H_PITCH) offset $::env(_H_PDN_OFFSET)}
     }
     connect {{met4 met5}}

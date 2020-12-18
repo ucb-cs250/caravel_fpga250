@@ -21,7 +21,7 @@ set ::env(GLB_RT_ALLOW_CONGESTION) 1
 
 #set ::env(CLOCK_PORT) "user_clock2"
 set ::env(CLOCK_PORT) "wb_clk_i"
-set ::env(CLOCK_NET) "mprj.clk"
+set ::env(CLOCK_NET) "fpga250.wb_clk_i"
 
 set ::env(CLOCK_PERIOD) "10"
 
