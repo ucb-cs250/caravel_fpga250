@@ -7,7 +7,7 @@ CLASS_REPO_ROOT=/home/arya/src/mpw-one-a/openlane/designs/250
 USER_PROJECT_WRAPPER_RUN=user_project_wrapper
 
 # Update final GDS, LEF, MAG, etc.
-FPGA_RUN="final4"
+FPGA_RUN="final5b_wrongclb"
 PHY_SOURCE="${CLASS_REPO_ROOT}/asic_config/fpga/runs/${FPGA_RUN}/results/magic"
 #PHY_SOURCE="${CLASS_REPO_ROOT}/gds/${PHY_SOURCE}"
 for file_type in lef gds mag; do
