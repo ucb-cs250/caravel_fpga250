@@ -106,7 +106,7 @@ config_tile #(
   .clk(clk),
   .rst(rst),
 
-  .shift_enable(cen),
+  .shift_enable(cen & (~set_in)),
   .shift_in_hard(shift_in),
   .shift_in_soft(shift_in),
   .shift_out(shift_out),

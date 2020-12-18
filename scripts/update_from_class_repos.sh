@@ -3,11 +3,11 @@
 
 # TODO(aryap): Get source of current script, etc.
 CARAVEL_ROOT=.
-CLASS_REPO_ROOT=/home/arya/src/openlane_develop/designs/250
+CLASS_REPO_ROOT=/home/arya/src/mpw-one-a/openlane/designs/250
 USER_PROJECT_WRAPPER_RUN=user_project_wrapper
 
 # Update final GDS, LEF, MAG, etc.
-FPGA_RUN="360_noscope"
+FPGA_RUN="final4"
 PHY_SOURCE="${CLASS_REPO_ROOT}/asic_config/fpga/runs/${FPGA_RUN}/results/magic"
 #PHY_SOURCE="${CLASS_REPO_ROOT}/gds/${PHY_SOURCE}"
 for file_type in lef gds mag; do
@@ -15,15 +15,15 @@ for file_type in lef gds mag; do
   cp -v "${PHY_SOURCE}/fpga.${file_type}" "${CARAVEL_ROOT}/${file_type}" &
 done
 
-CLB_RUN="360_noscope"
+CLB_RUN="final"
 PHY_SOURCE="${CLASS_REPO_ROOT}/asic_config/clb_tile/runs/${CLB_RUN}/results/magic"
 for file_type in lef gds mag; do
   cp -v "${PHY_SOURCE}/clb_tile.${file_type}" "${CLASS_REPO_ROOT}/gds/clb_tile/" &
   cp -v "${PHY_SOURCE}/clb_tile.${file_type}" "${CARAVEL_ROOT}/${file_type}" &
 done
 
-WB_RUN_00="360_noscope"
-WB_RUN_10="360_noscope"
+WB_RUN_00="360_noscope_a"
+WB_RUN_10="360_noscope_a"
 #PHY_SOURCE="${CLASS_REPO_ROOT}/config_team/asic_config/wishbone_configuratorinator/runs/${WB_RUN}/results/magic"
 #for file_type in lef gds mag; do
 #  cp -v "${PHY_SOURCE}/wishbone_configuratorinator.${file_type}" "${CLASS_REPO_ROOT}/gds/wishbone_configuratorinator/" &

@@ -84,10 +84,6 @@ module wishbone_configuratorinator #(
                 if (wbs_sel_i[0] == 1) free_run <= wbs_data_i[0];
                 write_transaction_in_progress <= 0;
             end else if (wbs_addr_i[3:0] == 4) begin
-                if (wbs_sel_i[0] == 1) counter_a <= wbs_data_i[7:0];
-                if (wbs_sel_i[1] == 1) counter_b <= wbs_data_i[15:8];
-                if (wbs_sel_i[2] == 1) counter_c <= wbs_data_i[23:16];
-                if (wbs_sel_i[3] == 1) counter_d <= wbs_data_i[31:24];
                 write_transaction_in_progress <= 0;
             end else if (wbs_addr_i[3:0] == 8) begin
                 if (wbs_sel_i[0] == 1) bits_a <= wbs_data_i[7:0];
@@ -151,17 +147,25 @@ module wishbone_configuratorinator #(
     assign shift_out[3] = (output_initiated) ? bits_d[bits_index] : 1'b0;
 
     always @(posedge wb_clk_i) begin
-        if (output_initiated) begin
-            if (counter_a != 8'hFF) counter_a <= counter_a - 1;
-            if (counter_b != 8'hFF) counter_b <= counter_b - 1;
-            if (counter_c != 8'hFF) counter_c <= counter_c - 1;
-            if (counter_d != 8'hFF) counter_d <= counter_d - 1;
-        end
         if (wb_rst_i == 1) begin
             counter_a <= 8'hFF;
             counter_b <= 8'hFF;
             counter_c <= 8'hFF;
             counter_d <= 8'hFF;
+        end
+        else if (output_initiated) begin
+            if (counter_a != 8'hFF) counter_a <= counter_a - 1;
+            if (counter_b != 8'hFF) counter_b <= counter_b - 1;
+            if (counter_c != 8'hFF) counter_c <= counter_c - 1;
+            if (counter_d != 8'hFF) counter_d <= counter_d - 1;
+        end
+        else if (write_transaction_in_progress == 1) begin
+            if (wbs_addr_i[3:0] == 4) begin
+                if (wbs_sel_i[0] == 1) counter_a <= wbs_data_i[7:0];
+                if (wbs_sel_i[1] == 1) counter_b <= wbs_data_i[15:8];
+                if (wbs_sel_i[2] == 1) counter_c <= wbs_data_i[23:16];
+                if (wbs_sel_i[3] == 1) counter_d <= wbs_data_i[31:24];
+            end
         end
     end
 endmodule
