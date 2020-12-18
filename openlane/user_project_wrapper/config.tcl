@@ -28,8 +28,8 @@ set ::env(VERILOG_FILES) "\
 	$script_dir/../../verilog/rtl/user_project_wrapper.v"
 
 ## Clock configurations
-set ::env(CLOCK_PORT) "user_clock2"
-set ::env(CLOCK_NET) "mprj.clk"
+set ::env(CLOCK_PORT) "wbs_clk_i"
+set ::env(CLOCK_NET) "fpga250.wbs_clk_i"
 
 set ::env(CLOCK_PERIOD) "10"
 
@@ -39,13 +39,16 @@ set ::env(MACRO_PLACEMENT_CFG) $script_dir/macro.cfg
 
 ### Black-box verilog and views
 set ::env(VERILOG_FILES_BLACKBOX) "\
+	$script_dir/../../verilog/rtl/blackbox/fpga.v \
 	$script_dir/../../verilog/rtl/defines.v \
 	$script_dir/../../verilog/rtl/user_proj_example.v"
 
 set ::env(EXTRA_LEFS) "\
+	$script_dir/../../lef/fpga.lef \
 	$script_dir/../../lef/user_proj_example.lef"
 
 set ::env(EXTRA_GDS_FILES) "\
+	$script_dir/../../gds/fpga.gds \
 	$script_dir/../../gds/user_proj_example.gds"
 
 
@@ -58,6 +61,9 @@ set ::env(FILL_INSERTION) 0
 set ::env(TAP_DECAP_INSERTION) 0
 set ::env(CLOCK_TREE_SYNTH) 0
 
+# mpw-one-b broke my pdn config:
+#set ::env(PDN_CFG) $script_dir/pdn.tcl
+#set ::env(PDN_MACRO_CFG) $script_dir/macro_pdn.tcl
 
 # DON'T TOUCH THE FOLLOWING SECTIONS
 
@@ -68,6 +74,8 @@ set ::env(MAGIC_ZEROIZE_ORIGIN) 0
 # Area Configurations. DON'T TOUCH.
 set ::env(FP_SIZING) absolute
 set ::env(DIE_AREA) "0 0 2920 3520"
+
+set ::env(FP_PDN_RAILS_LAYER) met1
 
 # Power & Pin Configurations. DON'T TOUCH.
 set ::env(FP_PDN_CORE_RING) 1
