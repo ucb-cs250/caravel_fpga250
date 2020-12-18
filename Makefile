@@ -14,12 +14,27 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-# cannot commit files larger than 100 MB to GitHub
-FILE_SIZE_LIMIT_MB = 100
+# cannot commit files larger than 100 MB to GitHub 
+FILE_SIZE_LIMIT_MB = 80
+FILE_SIZE_SPLIT_MB = 80
 LARGE_FILES := $(shell find ./gds -type f -name "*.gds")
-LARGE_FILES += $(shell find . -type f -size +$(FILE_SIZE_LIMIT_MB)M -not -path "./.git/*" -not -path "./gds/*" -not -path "./openlane/*")
+LARGE_FILES += $(shell find . -type f -size +$(FILE_SIZE_LIMIT_MB)M \
+	       -not -path "./.git/*" \
+	       -not -path "./gds/*" \
+	       -not -path "./openlane/*")
 
-LARGE_FILES_GZ := $(addsuffix .gz, $(LARGE_FILES))
+LARGE_FILES_XZ := $(addsuffix .xz, $(LARGE_FILES))
+LARGE_FILES_XZ_PART := $(addsuffix .part, $(LARGE_FILES_XZ))
+
+# These are compressed (.xz) and split (.part*) archives.
+ARCHIVES_XZ_PART := $(shell find . -type f -name "*.xz.part*")
+
+# These are the name of the .xz archives to restore by joining split parts.
+ARCHIVES_XZ := $(sort $(basename $(ARCHIVES_XZ_PART)))
+
+# These are names of the .gds files to restores from the compressed and split
+# archives.
+ARCHIVED := $(sort $(basename $(ARCHIVES_XZ)) $(basename $(shell find . -type f -name "*.xz")))
 
 ARCHIVES := $(shell find . -type f -name "*.gz")
 ARCHIVE_SOURCES := $(basename $(ARCHIVES))
@@ -33,6 +48,16 @@ SKYWATER_COMMIT ?= 3d7617a1acb92ea883539bcf22a632d6361a5de4
 OPEN_PDKS_COMMIT ?= 32cdb2097fd9a629c91e8ea33e1f6de08ab25946
 
 .DEFAULT_GOAL := ship
+
+.PHONY: print_vars
+print_vars:
+	@echo "LARGE_FILES         = $(LARGE_FILES)"
+	@echo "LARGE_FILES_XZ      = $(LARGE_FILES_XZ)"
+	@echo "LARGE_FILES_XZ_PART = $(LARGE_FILES_XZ_PART)"
+	@echo "ARCHIVES_XZ_PART    = $(ARCHIVES_XZ_PART)"
+	@echo "ARCHIVES_XZ         = $(ARCHIVES_XZ)"
+	@echo "ARCHIVED            = $(ARCHIVED)"
+
 # We need portable GDS_FILE pointers...
 .PHONY: ship
 ship: check-env uncompress
@@ -54,28 +79,32 @@ clean:
 verify:
 	echo "verify"
 
-
-
-$(LARGE_FILES_GZ): %.gz: %
-	@if ! [ $(suffix $<) == ".gz" ]; then\
-		gzip -n --best $< > /dev/null &&\
-		echo "$< -> $@";\
-	fi
+$(LARGE_FILES_XZ_PART): %.xz.part: %
+	@xz --extreme --force --threads=$(THREADS) $< && \
+	split -b $(FILE_SIZE_SPLIT_MB)M $(addsuffix .xz, $<) $@ && \
+	rm $<.xz && \
+	echo "$< -> $$(find . -wholename '*$<*' | xargs)"
 
 # This target compresses all files larger than $(FILE_SIZE_LIMIT_MB) MB
 .PHONY: compress
-compress: $(LARGE_FILES_GZ)
-	@echo "Files larger than $(FILE_SIZE_LIMIT_MB) MBytes are compressed!"
+compress: $(LARGE_FILES_XZ_PART)
+	@echo "Files larger than $(FILE_SIZE_LIMIT_MB) MBytes are compressed and split!"
 
+$(ARCHIVES_XZ):
 
-
-$(ARCHIVE_SOURCES): %: %.gz
-	@gzip -d $< &&\
-	echo "$< -> $@";\
+$(ARCHIVED): $(ARCHIVES_XZ)
+	@export PARTS="$(sort $(wildcard $@.xz.par*))" && \
+	cat $${PARTS} > $@.xz && \
+	unxz --force --threads=$(THREADS) $@.xz && \
+	rm $${PARTS} && \
+	echo "$${PARTS} -> $@"
 
 .PHONY: uncompress
-uncompress: $(ARCHIVE_SOURCES)
-	@echo "All files are uncompressed!"
+uncompress: $(ARCHIVED)
+	@echo "All files are concatenated and uncompressed!"
+
+.PHONY: decompress
+decompress: uncompress
 
 
 # LVS
