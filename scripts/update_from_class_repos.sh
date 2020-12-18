@@ -15,7 +15,7 @@ for file_type in lef gds mag; do
   cp -v "${PHY_SOURCE}/fpga.${file_type}" "${CARAVEL_ROOT}/${file_type}" &
 done
 
-CLB_RUN="final"
+CLB_RUN="predecode_a_2"
 PHY_SOURCE="${CLASS_REPO_ROOT}/asic_config/clb_tile/runs/${CLB_RUN}/results/magic"
 for file_type in lef gds mag; do
   cp -v "${PHY_SOURCE}/clb_tile.${file_type}" "${CLASS_REPO_ROOT}/gds/clb_tile/" &
