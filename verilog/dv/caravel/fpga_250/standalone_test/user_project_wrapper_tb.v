@@ -1,7 +1,7 @@
 // This is an adaptation of [fabric_team]/testbench/fpga_test_harness.v for
 // the user_project_wrapper in Caravel.
 
-`timescale 1ns/1ns
+`timescale 1ns/1ps
 
 `include "defines.v"
 
@@ -10,6 +10,7 @@
 
 `include "fpga_consts.vh"
 `include "user_project_wrapper.v"
+
 module user_project_wrapper_tb();
 
   reg clk, rst;
