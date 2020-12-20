@@ -10,7 +10,6 @@
 
 `include "fpga_consts.vh"
 `include "user_project_wrapper.v"
-
 module user_project_wrapper_tb();
 
   reg clk, rst;
@@ -53,7 +52,7 @@ module user_project_wrapper_tb();
     .wbs_we_i(wbs_we_i),     // input
     // Write mask
     .wbs_sel_i(wbs_sel_i),   // input
-    .wbs_dat_i(wbs_data_i), // input
+    .wbs_dat_i(wbs_data_i),  // input
     .wbs_adr_i(wbs_addr_i),  // input
     .wbs_ack_o(wbs_ack_o),   // output
     .wbs_dat_o(wbs_data_o),  // output
