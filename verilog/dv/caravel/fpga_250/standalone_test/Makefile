@@ -4,13 +4,11 @@ FIRMWARE_PATH      = ../..
 RTL_PATH           = ../../../../rtl
 IP_PATH            = ../../../../ip
 BEHAVIOURAL_MODELS = ../..
+SIM_PATH           = ..
 PDK_PATH           = $(PDK_ROOT)/sky130A
 SCRIPTS            = ../../../../../scripts
 
-GCC_PATH = /tools/B/tan.nqd/riscv64-unknown-elf-gcc/bin
-GCC_PREFIX?=riscv64-unknown-elf
-
-INCS = $(RTL_PATH)+$(IP_PATH)+$(BEHAVIOURAL_MODELS)+$(PDK_PATH)+./
+INCS = $(RTL_PATH)+$(IP_PATH)+$(BEHAVIOURAL_MODELS)+$(SIM_PATH)+$(PDK_PATH)
 
 SRCS = user_project_wrapper_tb.v
 
@@ -19,7 +17,7 @@ OPTS = -sverilog
 
 SIMV = ./standalone_test.simv
 
-$(SIMV): $(SRCS) $(HEX)
+$(SIMV): $(SRCS)
 	$(VCS) $(OPTS) +incdir+$(INCS) +define+SIM+FUNCTIONAL+USE_POWER_PINS+UNIT_DELAY="#0.1" $(SRCS) -o $@
 
 sim-rtl: $(SIMV)
