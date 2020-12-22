@@ -78,6 +78,7 @@ clean:
 .PHONY: verify
 verify:
 	echo "verify"
+	cd verilog/dv/caravel/fpga_250 && make clean && make
 
 $(LARGE_FILES_XZ_PART): %.xz.part: %
 	@xz --extreme --force --threads=$(THREADS) $< && \
