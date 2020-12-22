@@ -1,7 +1,7 @@
 FIRMWARE_PATH = ../..
 RTL_PATH = ../../../../rtl
 IP_PATH = ../../../../ip
-BEHAVIOURAL_MODELS = ../../ 
+BEHAVIOURAL_MODELS = ../../
 
 SCRIPTS = ../../../../../scripts/
 
@@ -29,7 +29,7 @@ hex:  ${PATTERN:=.hex}
 	${GCC_PATH}/${GCC_PREFIX}-gcc -march=rv32imc -mabi=ilp32 -Wl,-Bstatic,-T,$(FIRMWARE_PATH)/sections.lds,--strip-debug -ffreestanding -nostdlib -o $@ $(FIRMWARE_PATH)/start.s $<
 
 %.hex: %.elf
-	${GCC_PATH}/${GCC_PREFIX}-objcopy -O verilog $< $@ 
+	${GCC_PATH}/${GCC_PREFIX}-objcopy -O verilog $< $@
 	# to fix flash base address
 	sed -i 's/@10000000/@00000000/g' $@
 
@@ -37,7 +37,8 @@ hex:  ${PATTERN:=.hex}
 	${GCC_PATH}/${GCC_PREFIX}-objcopy -O binary $< /dev/stdout | tail -c +1048577 > $@
 
 %.bits.h: %.bits
-	${SCRIPTS}/bitstream2header.py $< $@
+	python3 ${SCRIPTS}/bitstream2header.py $< $@
+
 # ---- Clean ----
 
 clean:

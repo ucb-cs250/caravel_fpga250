@@ -57,7 +57,8 @@ module integration_tb;
     $display("FPGA250_GPIO_EAST=%b",  uut.mprj.fpga250.gpio_east);
     $display("FPGA250_GPIO_WEST=%b",  uut.mprj.fpga250.gpio_west);
 
-    if (uut.mprj.fpga250.gpio_south[0] === 1'b1)
+    if (uut.mprj.fpga250.gpio_south[0] === 1'b1 &&
+        uut.mprj.fpga250.gpio_south[0] === mprj_io[24])
       $display("[gpio test] PASSED!");
     else
       $display("[gpio test] FAILED!");

@@ -61,6 +61,7 @@ void main()
 
   /* Apply configuration */
   reg_mprj_xfer = 1;
+  while (reg_mprj_xfer == 1);
 
 	*config_base_00 = 0;
 	*counters_00    = 0xFFFFFFFF;

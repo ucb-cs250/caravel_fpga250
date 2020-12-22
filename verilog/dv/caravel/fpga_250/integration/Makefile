@@ -1,23 +1,29 @@
-VCS = vcs -full64
+VCS      = vcs -full64
+IVERILOG = iverilog
+
 FIRMWARE_PATH      = ../..
 RTL_PATH           = ../../../../rtl
 IP_PATH            = ../../../../ip
 BEHAVIOURAL_MODELS = ../..
-PDK_PATH           = $(PDK_ROOT)/sky130A
 SIM_PATH           = ..
 SCRIPTS            = ../../../../../scripts
 
-GCC_PATH = /home/aa/users/tan.nqd/riscv64-unknown-elf-gcc/bin
-GCC_PREFIX?=riscv64-unknown-elf
+GCC_PATH?=/ef/apps/bin
+GCC_PREFIX?=riscv32-unknown-elf
+PDK_PATH?=/ef/tech/SW/sky130A
 
 INCS = $(RTL_PATH)+$(IP_PATH)+$(BEHAVIOURAL_MODELS)+$(SIM_PATH)+$(PDK_PATH)
 
 SRCS = integration_tb.v
 
+all: sim-rtl
+
 # Bare minimum required VCS flag
-OPTS = -sverilog
+VCS_OPTS = -sverilog
 
 SIMV = ./integration.simv
+VVP  = ./integration.vvp
+
 HEX  = software.hex
 software.elf: software.c bitstream.h $(FIRMWARE_PATH)/sections.lds $(FIRMWARE_PATH)/start.s
 	${GCC_PATH}/${GCC_PREFIX}-gcc -march=rv32imc -mabi=ilp32 -Wl,-Bstatic,-T,$(FIRMWARE_PATH)/sections.lds,--strip-debug -ffreestanding -nostdlib -o $@ $(FIRMWARE_PATH)/start.s $<
@@ -31,10 +37,16 @@ bitstream.h: bitstream.txt
 	python3 ${SCRIPTS}/bitstream2header.py $< $@
 
 $(SIMV): $(SRCS) $(HEX)
-	$(VCS) $(OPTS) +incdir+$(INCS) +define+FUNCTIONAL+SIM+USE_POWER_PINS $(SRCS) -o $@
+	$(VCS) $(VCS_OPTS) +incdir+$(INCS) +define+FUNCTIONAL+SIM+USE_POWER_PINS $(SRCS) -o $@
 
 sim-rtl: $(SIMV)
-	$(SIMV) -q +ntb_random_seed_automatic +load_gpio_output=gpio_output.txt
+	$(SIMV) -q +ntb_random_seed_automatic
+
+$(VVP): $(SRCS)
+	$(IVERILOG) -g2005-sv -I $(RTL_PATH) -I $(IP_PATH) -I $(BEHAVIOURAL_MODELS) -I $(SIM_PATH) -I $(PDK_PATH) -DSIM -DFUNCTIONAL -DUSE_POWER_PINS -DUNIT_DELAY="#0.1" $(SRCS) -o $@
+
+sim-rtl-iverilog: $(VVP)
+	vvp $(VVP)
 
 clean:
-	rm -rf *simv* csrc ucli.key *.elf *.bits.h *.hex *.bin *.vcd *.log
+	rm -rf *simv* csrc ucli.key *.elf *.bits.h *.hex *.bin *.vcd *.log *.vvp
